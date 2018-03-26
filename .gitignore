@@ -1,7 +1,7 @@
 /data/*
 !/data/demos/
 
-results/
+output/
 
 logs/
 job_storage/
