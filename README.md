@@ -5,7 +5,7 @@ Created by Christos Sakaridis at Computer Vision Lab, ETH Zurich.
 
 ### Introduction
 
-This is the source code for the fog simulation pipeline that we present in our IJCV article on [**Semantic Foggy Scene Understanding with Synthetic Data**][project_page], which is used to create the *Foggy Cityscapes* dataset from the original [Cityscapes][cityscapes] dataset. This pipeline involves computation of a denoised and complete depth map as well as a corresponding transmittance map, the latter being combined with the real clear-weather image to obtain the partially synthetic foggy image.
+This is the source code for the fog simulation pipeline that we present in our IJCV article titled [**Semantic Foggy Scene Understanding with Synthetic Data**][project_page], which is used to create the *Foggy Cityscapes* dataset from the original [Cityscapes][cityscapes] dataset. This pipeline involves computation of a denoised and complete depth map as well as a corresponding transmittance map, the latter being combined with the real clear-weather image to obtain the partially synthetic foggy image.
 
 
 ### Citation
