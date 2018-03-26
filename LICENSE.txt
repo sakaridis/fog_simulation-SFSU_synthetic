@@ -1,0 +1,27 @@
+----------------------------------------------------------------
+Fog Simulation on Real Scenes for Partially Synthetic Foggy Data
+----------------------------------------------------------------
+
+
+License agreement
+-----------------
+
+This software and associated files (the "Software") is made freely available to academic and non-academic entities for non-commercial purposes such as academic research, teaching, scientific publications, or personal experimentation. Permission is granted to use the Software given that you agree:
+
+1. That the Software comes "AS IS", without express or implied warranty.
+2. That you include references to
+   a. our relevant publication as listed on our website people.ee.ethz.ch/~csakarid/SFSU_synthetic ,
+   b. the Cityscapes dataset publication as listed on www.cityscapes-dataset.com/citation , and
+   c. the SLIC superpixels publication as listed on ivrl.epfl.ch/research/superpixels
+   in any work that makes use of the Software.
+3. That you do not distribute the Software.
+4. That you may not use the Software or any derivative work for commercial purposes as, for example, licensing or selling the Software, or using the Software with a purpose to procure a commercial gain.
+5. That all rights not expressly granted to you are reserved by us (ETH Zurich).
+
+
+Contact
+-------
+
+Christos Sakaridis
+csakarid@vision.ee.ethz.ch
+people.ee.ethz.ch/~csakarid/SFSU_synthetic
