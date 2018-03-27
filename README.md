@@ -32,10 +32,10 @@ Our fog simulation code is made available for non-commercial use under the licen
 
 ### Requirements
 
-1.  **MATLAB**: required
+1.  **MATLAB**: required  
     The code has been tested with MATLAB releases 2016b and 2017b. We therefore recommend using release 2016b or later, noting that these releases are only available for 64-bit systems. If such a configuration is not possible, using an earlier MATLAB release is the recommended (though not tested) alternative.
 2.  C compiler: required for compilation of binary MEX file for SLIC superpixels
-3.  Linux 64-bit: recommended
+3.  Linux 64-bit: recommended  
     A binary MEX file for SLIC superpixels is provided in this repository for Linux 64-bit platforms (file extension: `mexa64`). Users working on other platforms have to create the respective MEX file themselves via MATLAB (see [instructions](#installation-for-running-the-demo) below).
 
 
@@ -50,8 +50,8 @@ The folder structure of *Foggy Cityscapes* follows that of Cityscapes, with mino
 ```
 {root}/{type}/{split}/{city}/{city}_{seq:0>6}_{frame:0>6}_{type}{ext}
 ```
-Please refer to the README file of the Cityscapes git repository for a detailed presentation of this structure: 
-https://github.com/mcordts/cityscapesScripts
+Please refer to the README file of the Cityscapes git repository for a detailed presentation of this structure:  
+https://github.com/mcordts/cityscapesScripts  
 In the following, we outline only those elements of the folder structure that are potentially differentiated in *Foggy Cityscapes*.
 
 The meaning of the individual elements is:
@@ -73,9 +73,9 @@ A refined list of 550 Cityscapes images (498 `train` plus 52 `val`) that yield h
 
 ### Contact
 
-Christos Sakaridis
-csakarid[at]vision.ee.ethz.ch
-people.ee.ethz.ch/~csakarid/SFSU_synthetic
+Christos Sakaridis  
+csakarid[at]vision.ee.ethz.ch  
+http://people.ee.ethz.ch/~csakarid/SFSU_synthetic
 
 [project_page]: <http://people.ee.ethz.ch/~csakarid/SFSU_synthetic/>
 [cityscapes]: <https://www.cityscapes-dataset.com/>
