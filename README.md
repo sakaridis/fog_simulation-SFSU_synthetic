@@ -32,16 +32,50 @@ Our fog simulation code is made available for non-commercial use under the licen
 
 ### Requirements
 
-1.  **MATLAB**: required  
-    The code has been tested with MATLAB releases 2016b and 2017b. We therefore recommend using release 2016b or later, noting that these releases are only available for 64-bit systems. If such a configuration is not possible, using an earlier MATLAB release is the recommended (though not tested) alternative.
-2.  C compiler: required for compilation of binary MEX file for SLIC superpixels
-3.  Linux 64-bit: recommended  
-    A binary MEX file for SLIC superpixels is provided in this repository for Linux 64-bit platforms (file extension: `mexa64`). Users working on other platforms have to create the respective MEX file themselves via MATLAB (see [instructions](#installation-for-running-the-demo) below).
+1.  **MATLAB**  
+    The code has been developed and tested in MATLAB releases 2016b and 2017b. We therefore recommend using release 2016b or later, noting that these releases are only available for 64-bit systems. If such a configuration is not possible, using an earlier MATLAB release is the recommended (though not tested) alternative.
+2.  **C compiler**  
+    Users will have to build a binary MEX file for SLIC superpixels themselves in MATLAB (see [instructions](#installation-for-running-the-demo) below), which requires a MATLAB-supported C compiler.
 
 
 ### Installation for running the demo
 
-Basic installation.
+Our fog simulation pipeline makes use of [SLIC superpixels][slic_citation], for which the algorithm is implemented in the form of a [source MEX file](source/external/SLIC_mex/slicmex.c) for usage in MATLAB. In short, a C compiler has to be configured with MATLAB and then used to build the binary MEX file for SLIC which is called in the pipeline. This [MATLAB doc page](https://www.mathworks.com/help/matlab/matlab_external/what-you-need-to-build-mex-files.html) can serve as a reference.
+
+Steps:
+1. Clone this repository with
+   ```
+   git clone https://github.com/sakaridis/fog_simulation-SFSU_synthetic.git
+   ```
+2. Make sure a MATLAB-supported C compiler is installed in your system.
+3. Open MATLAB and type in the Command Window
+   ```
+   mex -setup
+   ```
+   which will guide you through the process of configuring MATLAB's `mex` command with the compiler from step 2. Once this setup has been completed successfully, issuing the above command for a second time should generate a message similar to
+   ```
+   MEX configured to use 'gcc' for C language compilation.
+   ```
+   For further details, please consult the [mex command documentation](https://www.mathworks.com/help/matlab/ref/mex.html).
+4. Assign the MATLAB variable `fog_simulation_root` with the path to the directory into which you have cloned this repository, by issuing in the Command Window something like
+   ```
+   fog_simulation_root = '/home/some_user/fog_simulation-SFSU_synthetic';
+   ```
+5. Change MATLAB's current folder to `fog_simulation_root`, e.g. with
+   ```
+   cd(fog_simulation_root);
+   ```
+6. Build the binary MEX file for SLIC from the respective C source file with
+   ```
+   cd(fullfile('source', 'external', 'SLIC_mex'));
+   mex slicmex.c;
+   ```
+   If the build is successful, it will generate a message similar to
+   ```
+   Building with 'gcc'.
+   MEX completed successfully.
+   ```
+   and a binary MEX file `slicmex.<ext>` will be created in the [SLIC source code directory](source/external/SLIC_mex), where extension `<ext>` depends on your system (see [MATLAB docs](https://www.mathworks.com/help/matlab/matlab_external/build-an-executable-mex-file.html) for details).
 
 
 ### Dataset Structure
