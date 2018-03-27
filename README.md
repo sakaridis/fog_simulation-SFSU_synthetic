@@ -41,6 +41,8 @@ Our fog simulation code is made available for non-commercial use under the licen
 
 ### Installation for running the demo
 
+Basic installation.
+
 
 ### Dataset Structure
 
