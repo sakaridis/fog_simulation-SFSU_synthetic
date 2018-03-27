@@ -25,7 +25,7 @@ Our fog simulation code is made available for non-commercial use under the licen
 
 1. [Requirements](#requirements)
 3. [Basic installation](#installation-for-running-the-demo)
-4. Demo
+4. [Demo](#demo)
 5. Beyond the demo: fog simulation at dataset scale
 6. Extra downloads: **CNN models** fine-tuned on *Foggy Cityscapes*
 
@@ -78,26 +78,17 @@ Steps:
    and a binary MEX file `slicmex.<ext>` will be created in the [SLIC source code directory](source/external/SLIC_mex), where extension `<ext>` depends on your system (see [MATLAB docs](https://www.mathworks.com/help/matlab/matlab_external/build-an-executable-mex-file.html) for details).
 
 
-### Dataset Structure
+### Demo
 
-The folder structure of *Foggy Cityscapes* follows that of Cityscapes, with minor extensions and modifications. It is summarized as follows:
+After completing the [basic installation](#installation-for-running-the-demo), you will be all set to run the demo.
+
+To run the demo in MATLAB, type in the Command Window
 ```
-{root}/{type}/{split}/{city}/{city}_{seq:0>6}_{frame:0>6}_{type}{ext}
+cd(fullfile(fog_simulation_root, 'source'));
+Demo_fog_simulation_Cityscapes;
 ```
-Please refer to the README file of the Cityscapes git repository for a detailed presentation of this structure:  
-https://github.com/mcordts/cityscapesScripts  
-In the following, we outline only those elements of the folder structure that are potentially differentiated in *Foggy Cityscapes*.
 
-The meaning of the individual elements is:
- - `root`  the root folder of the Foggy Cityscapes dataset. We recommend that this folder coincides with the root folder of the original Cityscapes dataset.
- - `type`  the type/modality of data, e.g. `depth_stereoscopic` for completed depth maps, or `leftImg8bit` for left 8-bit foggy images.
- - `split` the split, i.e. `train`/`val`/`test`/`train_extra`.
- - `ext`   the extension of the file and optionally a suffix, e.g. `.mat` for completed depth maps.
-
-Possible values of `type`
- - `leftImg8bit`               the left foggy images in 8-bit format. These are the foggy versions of the standard annotated Cityscapes images.
- - `depth_stereoscopic`        denoised and complete depth maps, based on the precomputed disparity maps (`disparity` type) included in Cityscapes. These depth maps are stored in MATLAB `.mat` files in `double` format and **directly encode depth values in meters**.
- - `leftImg8bit_transmittance` the transmittance maps for the left foggy images, in 8-bit format. Value `0` corresponds to transmittance `0`, while value `255` corresponds to transmittance `1`.
+The demo runs our fog simulation on an example clear-weather image from Cityscapes and writes the results (synthesized foggy image, estimated transmittance map and depth map) under the directory `output/demos/`. The running time for a single image is around 2-3 minutes on an Intel Core i7 machine with 16 GB RAM.
 
 
 ### Foggy Cityscapes-refined
