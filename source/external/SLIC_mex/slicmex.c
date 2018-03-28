@@ -324,6 +324,7 @@ void mexFunction(int nlhs, mxArray *plhs[],
     int numelements;
     int numSuperpixels = 200;
     double compactness = 10;
+	mwSize numdims;
 
     if (nrhs < 1) {
         mexErrMsgTxt("At least one argument is required.") ;
@@ -334,7 +335,7 @@ void mexFunction(int nlhs, mxArray *plhs[],
         mexErrMsgIdAndTxt("SLIC:nlhs","Two outputs required, a labels and the number of labels, i.e superpixels.");
     }
     numelements   = mxGetNumberOfElements(prhs[0]) ;
-    mwSize numdims = mxGetNumberOfDimensions(prhs[0]) ;
+    numdims = mxGetNumberOfDimensions(prhs[0]) ;
     dims  = mxGetDimensions(prhs[0]) ;
     imgbytes  = (unsigned char*)mxGetData(prhs[0]) ;
     width = dims[1]; height = dims[0];
