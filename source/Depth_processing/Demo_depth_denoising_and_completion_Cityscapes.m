@@ -13,12 +13,10 @@ addpath('../utilities');
 images_root_dir = '../../data/demos';
 
 % Example images. Uncomment whichever you would like to experiment with.
-image_basename = 'aachen_000124_000019';
-% image_basename = 'aachen_000001_000019';
-% image_basename = 'cologne_000088_000019';
+image_basename = 'hamburg_000000_046078';
 % image_basename = 'dusseldorf_000020_000019';
-% image_basename = 'heidelberg_000000_000883';
-% image_basename = 'hamburg_000000_046078';
+% image_basename = 'cologne_000088_000019';
+% image_basename = 'aachen_000001_000019';
 
 left_input = imread(fullfile(images_root_dir, 'leftImg8bit',...
     strcat(image_basename, '_leftImg8bit.png')));
