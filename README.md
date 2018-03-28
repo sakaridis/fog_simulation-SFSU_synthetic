@@ -96,6 +96,16 @@ The demo runs our fog simulation on an example clear-weather image from Cityscap
 A refined list of 550 Cityscapes images (498 `train` plus 52 `val`) that yield high-quality synthetic foggy images is provided in the file `foggy_trainval_refined_filenames.txt`. Details on the refinement criteria are given in our [publication][project_page].
 
 
+### References
+
+1. M. Cordts, M. Omran, S. Ramos, T. Rehfeld, M. Enzweiler, R. Benenson, U. Franke, S. Roth, and B. Schiele: **The Cityscapes Dataset for Semantic Urban Scene Understanding**. In CVPR (2016).
+2. L. Wang, H. Jin, R. Yang, and M. Gong: **Stereoscopic Inpainting: Joint Color and Depth Completion from Stereo Images**. In CVPR (2008).
+3. R. Achanta, A. Shaji, K. Smith, A. Lucchi, P. Fua, and S. Süsstrunk: **SLIC Superpixels Compared to State-of-the-Art Superpixel Methods**. IEEE Transactions on Pattern Analysis and Machine Intelligence 34(11), 2274-2282 (2012).
+4. K. He, J. Sun, and X. Tang: **Guided Image Filtering**. IEEE Transactions on Pattern Analysis and Machine Intelligence 35(6), 1397–1409 (2013).
+5. K. He, J. Sun, and X. Tang: **Single Image Haze Removal Using Dark Channel Prior**. IEEE Transactions on Pattern Analysis and Machine Intelligence 33(12), 2341–2353 (2011).
+6. K. Tang, J. Yang, and J. Wang: **Investigating Haze-Relevant Features in a Learning Framework for Image Dehazing**. In CVPR (2014).
+
+
 ### Contact
 
 Christos Sakaridis  
