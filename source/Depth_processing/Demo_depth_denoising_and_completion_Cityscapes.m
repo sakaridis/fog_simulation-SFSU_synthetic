@@ -83,7 +83,14 @@ S_L = double(S_L) + 1;
 
 % Convert input image to L*a*b* colorspace for subsequent color similarity
 % computation.
-left_image_lab = rgb2lab(left_image);
+MATLAB_release = version('-release');
+first_release_with_rgb2lab = '2014b';
+if cstrcmp(MATLAB_release, first_release_with_rgb2lab) >= 0
+    left_image_lab = rgb2lab(left_image);
+else
+    cform = makecform('srgb2lab');
+    left_image_lab = applycform(left_image, cform);
+end
 left_image_l = left_image_lab(:, :, 1);
 left_image_a = left_image_lab(:, :, 2);
 left_image_b = left_image_lab(:, :, 3);
