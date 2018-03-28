@@ -94,7 +94,7 @@ We have tested the demo:
 - on Linux 64-bit with gcc and MATLAB releases 2016b and 2017b
 - on Windows 64-bit with Microsoft Visual C++ 2012 and MATLAB release 2014a
 
-The results of the demo may differ for MATLAB release 2014a or earlier compared to 2014b or newer, although this difference is generally negligible. The reason is that for the required conversion of the input image to the CIE L\*a\*b\* color space, the recommended MATLAB function `rgb2lab` was only introduced in release 2014b, and the alternative implementation for earlier releases produces slightly different values for the output CIE L\*a\*b\* image. We note that for generating our *Foggy Cityscapes* dataset, we have used a release supporting `rgb2lab`.
+The results of the demo may differ for MATLAB release 2014a or earlier compared to 2014b or newer, although this difference is generally negligible. The reason is that for the required conversion of the input image to the CIE L\*a\*b\* color space, the recommended MATLAB function `rgb2lab` was only introduced in release 2014b, and the alternative implementation for earlier releases produces slightly different values for the output CIE L\*a\*b\* image. We note that for generating our *Foggy Cityscapes* dataset, we have used `rgb2lab`.
 
 
 ### Foggy Cityscapes-refined
