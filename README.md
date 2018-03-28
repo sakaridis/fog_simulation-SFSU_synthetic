@@ -33,7 +33,7 @@ Our fog simulation code is made available for non-commercial use under the licen
 ### Requirements
 
 1.  **MATLAB**  
-    The code has been developed and tested in MATLAB releases 2016b and 2017b. We therefore recommend using release 2016b or later, noting that these releases are only available for 64-bit systems. If such a configuration is not possible, using an earlier MATLAB release is the recommended (though not tested) alternative.
+    The code has been developed and tested in MATLAB releases 2014a, 2016b and 2017b. We therefore recommend using release 2014a or later. If such a configuration is not possible, using an earlier MATLAB release is the recommended (though not tested) alternative.
 2.  **C compiler**  
     Users will have to build a binary MEX file for SLIC superpixels themselves in MATLAB (see [instructions](#installation-for-running-the-demo) below), which requires a MATLAB-supported C compiler.
 
@@ -47,7 +47,7 @@ Steps:
    ```
    git clone https://github.com/sakaridis/fog_simulation-SFSU_synthetic.git
    ```
-2. Make sure a MATLAB-supported C compiler is installed in your system.
+2. Make sure a MATLAB-supported C compiler is installed in your system, e.g. gcc for Linux.
 3. Open MATLAB and type in the Command Window
    ```
    mex -setup
@@ -89,6 +89,12 @@ Demo_fog_simulation_Cityscapes;
 ```
 
 The demo runs our fog simulation on an example clear-weather image from Cityscapes and writes the results (synthesized foggy image, estimated transmittance map and depth map) under the directory `output/demos/`. The running time for a single image is around 2-3 minutes on an Intel Core i7 machine with 16 GB RAM.
+
+We have tested the demo:
+- on Linux 64-bit with gcc and MATLAB releases 2016b and 2017b
+- on Windows 64-bit with Microsoft Visual C++ 2012 and MATLAB release 2014a
+
+The results of the demo may differ for MATLAB release 2014a or earlier compared to 2014b or newer, although this difference is generally negligible. The reason is that for the required conversion of the input image to the CIE L\*a\*b\* color space, the recommended MATLAB function `rgb2lab` was only introduced in release 2014b, and the alternative implementation for earlier releases produces slightly different values for the output CIE L\*a\*b\* image. We note that for generating our *Foggy Cityscapes* dataset, we have used a release supporting `rgb2lab`.
 
 
 ### Foggy Cityscapes-refined
