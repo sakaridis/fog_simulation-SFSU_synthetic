@@ -1,6 +1,10 @@
 /data/*
 !/data/demos/
 
+/source/external/SLIC_mex/*.mexa64
+/source/external/SLIC_mex/*.mexw64
+/source/external/SLIC_mex/*.mexmaci64
+
 output/
 
 logs/
