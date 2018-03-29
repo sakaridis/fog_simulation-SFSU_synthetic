@@ -7,14 +7,14 @@
 #$ -l h_vmem=10G
 #
 #  Set wallclock time limit - depending on batch size.
-#$ -l h_rt=1:00:00
+#$ -l h_rt=6:00:00
 #
 #  Make sure that the .e and .o file arrive in the
 #  working directory.
 #$ -cwd
 #
 #  Specify path to job's stdout output file.
-#$ -o ../logs/Cityscapes/trainval_refined_stereogf_beta_0.06
+#$ -o ../logs/Cityscapes/trainvaltest_full_stereogf_beta_0.005
 #
 #  Merge the standard out and standard error to one file.
 #$ -j y
@@ -24,11 +24,11 @@
 #
 #  Force / switch off an immediate execution of the job:
 #  crucially affects execution success
-#$ -now y
+#$ -now n
 #
 #  Schedule K jobs with ids 1-K. The specific value of K
 #  depends on the batch size.
-#$ -t 1-22
+#$ -t 1-50
 #
 source /home/sgeadmin/BIWICELL/common/settings.sh
 /bin/echo Running on host: `hostname`
@@ -41,12 +41,12 @@ source /home/sgeadmin/BIWICELL/common/settings.sh
 
 # Parameters.
 TASK_ID=${SGE_TASK_ID:-"$1"}
-DATASET_SPLIT="trainval"
-REFINEMENT_LEVEL="refined"
+DATASET_SPLIT="trainvaltest"
+REFINEMENT_LEVEL="full"
 VARIANT="stereoscopic_inpainting_with_guided_filtering"
-BETA="0.06"
-OUTPUT_ROOT_DIR="/scratch_net/nowin/csakarid/Toyota-foggy/data/Cityscapes" # Change to preferred directory for writing results of simulation.
-IMAGES_PER_TASK="25"
+BETA="0.005"
+OUTPUT_ROOT_DIR="../../output/Foggy_Cityscapes" # Change to preferred directory for writing results of simulation.
+IMAGES_PER_TASK="100"
 
 # Change directory to that containing the fog simulation script.
 cd ..

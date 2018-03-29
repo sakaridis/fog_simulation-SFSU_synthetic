@@ -1,33 +1,35 @@
 function clean2foggy_Cityscapes_nn(left_image_file_names,...
     disparity_file_names, camera_parameters_file_names,...
-    attenuation_coefficient_method, beta_parameters, atmospheric_light_estimation,...
-    transmittance_model, fog_optical_model, cityscapes_foggy_output_directory,...
+    attenuation_coefficient_method, beta_parameters,...
+    atmospheric_light_estimation, transmittance_model, fog_optical_model,...
+    cityscapes_foggy_output_directory,...
     cityscapes_transmittance_output_directory, output_format)
-%CLEAN2FOGGY_CITYSCAPES_NN  Simulate haze for Cityscapes using depth maps
-%completed with nearest neighbor interpolation.
+%CLEAN2FOGGY_CITYSCAPES_NN  Create foggy counterparts for an input list of clean
+%Cityscapes images using depth maps completed with nearest neighbor
+%interpolation for fog simulation.
 %
 %   INPUTS:
 %
 %   -|left_image_file_names|: cell array of strings with full paths to clean
-%   left input images.
+%    left input images.
 %
 %   -|disparity_file_names|: cell array of strings with full paths to disparity
-%   maps for input images.
+%    maps for input images.
 %
 %   -|camera_parameters_file_names|: cell array of strings with full paths to
-%   JSON files where camera parameters are stored.
+%    JSON files where camera parameters are stored.
 %
 %   -|attenuation_coefficient_method|: handle of the function which is specified
-%   as the attenuation coefficient method.
+%    as the attenuation coefficient method.
 %
 %   -|beta_parameters|: struct with fields that help compute values for
 %    attenuation coefficient beta corresponding to the processed images.
 %
 %   -|atmospheric_light_estimation|: handle of the function which is used to
-%   estimate atmospheric light.
+%    estimate atmospheric light.
 %
-%   -|transmittance_model|: handle of the function that implements computation of
-%   transmittance map given a depth map.
+%   -|transmittance_model|: handle of the function that implements computation
+%    of transmittance map given a depth map.
 %
 %   -|fog_optical_model|: handle of the function that implements fog simulation
 %    on a clean image.
@@ -40,6 +42,13 @@ function clean2foggy_Cityscapes_nn(left_image_file_names,...
 %
 %   -|output_format|: string specifying the image format for the foggy output
 %    images, e.g. '.png'
+
+% Root directory for Cityscapes dataset relative to current script, after having
+% created the symbolic link according to guidelines in README.
+current_script_full_name = mfilename('fullpath');
+current_script_directory = fileparts(current_script_full_name);
+Cityscapes_root_directory = fullfile(current_script_directory, '..', '..',...
+    'data', 'Cityscapes');
 
 % Total number of processed images. Should be equal to number of files for each
 % auxiliary set.
@@ -54,21 +63,30 @@ beta_vector = attenuation_coefficient_method(number_of_images, beta_parameters);
 for i = 1:number_of_images
     
     % Read input disparity map.
-    input_disparity = imread(disparity_file_names{i});
+    current_disparity_file_name = fullfile(Cityscapes_root_directory,...
+        disparity_file_names{i});
+    input_disparity = imread(current_disparity_file_name);
     
     % Read left image and bring it to double precision for subsequent
     % computations.
-    R_left_uint8 = imread(left_image_file_names{i});
+    current_left_image_file_name = fullfile(Cityscapes_root_directory,...
+        left_image_file_names{i});
+    R_left_uint8 = imread(current_left_image_file_name);
     R_left = im2double(R_left_uint8);
+    
+    % Create full file name for the respective camera parameters file.
+    current_camera_parameters_file_name = fullfile(Cityscapes_root_directory,...
+        camera_parameters_file_names{i});
     
     % Process depth input, so that |depth_map| is a 2-dimensional matrix in
     % double format with the same resolution as the input image, containing
     % depth values in meters.
     depth_map = depth_in_meters_cityscapes_nn_inpainting(input_disparity,...
-        camera_parameters_file_names{i});
+        current_camera_parameters_file_name);
     
     % Compute transmittance map using the specified transmittance model.
-    t = transmittance_model(depth_map, beta_vector(i));
+    t = transmittance_model(depth_map, beta_vector(i),...
+        current_camera_parameters_file_name);
     
     % Estimate atmospheric light for the clean image.
     neighborhood_size_dark_channel = 15;
@@ -85,8 +103,7 @@ for i = 1:number_of_images
     % directories in a (preferably) lossless format.
     
     % The name of and path to the output image is based on the input image.
-    [path_to_input, R_left_name] =...
-        fileparts(left_image_file_names{i});
+    [path_to_input, R_left_name] = fileparts(current_left_image_file_name);
     
     % Suffices specifying the parameter values that were used to generate haze.
     parameters_suffix_foggy = strcat('_foggy_beta_', num2str(beta_vector(i)));
@@ -112,10 +129,10 @@ for i = 1:number_of_images
     
     % Create output directories where synthetic foggy images and transmittance
     % maps will be saved, if they do not already exist.
-    if exist(current_foggy_output_directory) ~= 7
+    if ~exist(current_foggy_output_directory, 'dir')
         mkdir(current_foggy_output_directory);
     end
-    if exist(current_transmittance_output_directory) ~= 7
+    if ~exist(current_transmittance_output_directory, 'dir')
         mkdir(current_transmittance_output_directory);
     end
     

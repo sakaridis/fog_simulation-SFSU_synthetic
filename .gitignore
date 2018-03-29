@@ -1,5 +1,6 @@
 /data/*
 !/data/demos/
+!/data/lists_file_names/
 
 /source/external/SLIC_mex/*.mexa64
 /source/external/SLIC_mex/*.mexw64
