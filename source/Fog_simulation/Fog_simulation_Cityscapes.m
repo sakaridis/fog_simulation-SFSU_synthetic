@@ -5,8 +5,9 @@ function Fog_simulation_Cityscapes(task_id, dataset_split, refinement_level,...
 %
 %   INPUTS:
 %
-%   -|task_id|: ID of the task. Used to determine which images out of the entire
-%    dataset will form the batch that will be processed by this task.
+%   -|task_id|: ID of the task. Used in conjuction with |images_per_task| to
+%    determine which images out of the entire dataset will form the batch that
+%    will be processed by this task.
 %
 %   -|dataset_split|: string that indicates which subset of Cityscapes is used
 %    for running the simulation, e.g. 'trainval', 'train_extra'.
