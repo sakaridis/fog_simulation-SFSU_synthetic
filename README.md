@@ -26,7 +26,7 @@ Our fog simulation code is made available for non-commercial use under the licen
 1. [Requirements](#requirements)
 3. [Basic installation](#installation-for-running-the-demo)
 4. [Demo](#demo)
-5. Beyond the demo: fog simulation at dataset scale
+5. [Beyond the demo: generating *Foggy Cityscapes*](#beyond-the-demo-running-fog-simulation-to-generate-foggy-cityscapes)
 6. Extra downloads: **CNN models** fine-tuned on *Foggy Cityscapes*
 
 
@@ -97,9 +97,46 @@ We have tested the demo:
 The results of the demo may differ for MATLAB release 2014a or earlier compared to 2014b or newer, although this difference is generally negligible. The reason is that for the required conversion of the input image to the CIE L\*a\*b\* color space, the recommended MATLAB function `rgb2lab` was only introduced in release 2014b, and the alternative implementation for earlier releases produces slightly different values for the output CIE L\*a\*b\* image. We note that for generating our *Foggy Cityscapes* dataset, we have used `rgb2lab`.
 
 
-### Foggy Cityscapes-refined
+### Beyond the demo: running fog simulation to generate Foggy Cityscapes
 
-A refined list of 550 Cityscapes images (498 `train` plus 52 `val`) that yield high-quality synthetic foggy images is provided in the file `foggy_trainval_refined_filenames.txt`. Details on the refinement criteria are given in our [publication][project_page].
+The *Foggy Cityscapes* dataset is directly available for download at our dedicated [website][project_page] and at the [Cityscapes website][cityscapes]. However, for completeness we include in this repository some example code which can serve as a basis for users to reproduce the full-scale fog simulation experiments on Cityscapes for generating *Foggy Cityscapes*. Prior to running these experiments, the [basic installation](#installation-for-running-the-demo) has to be performed and a list of Cityscapes packages has to be downloaded.
+
+1. Download from the [Cityscapes website](https://www.cityscapes-dataset.com/downloads/) the following packages:
+   - `leftImg8bit_trainvaltest.zip`
+   - `rightImg8bit_trainvaltest.zip`
+   - `disparity_trainvaltest.zip`
+   - `camera_trainvaltest.zip`
+2. After unzipping these packages, you have to ensure that the extracted files obey a certain directory structure. We will denote the root directory for Cityscapes into which you have put these packages by `CITYSCAPES_ROOT`. The required directory structure is as follows:
+   - `CITYSCAPES_ROOT`
+      - `leftImg8bit`
+         - `train`
+         - `val`
+         - `test`
+      - `rightImg8bit`
+         - `train`
+         - `val`
+         - `test`
+      - `disparity`
+         - `train`
+         - `val`
+         - `test`
+      - `camera`
+         - `train`
+         - `val`
+         - `test`
+   The lower levels of the directory structure correspond to city directories and files therein (e.g. `leftImg8bit/test/berlin/berlin_000362_000019_leftImg8bit.png`) and are omitted above for brevity.
+3. Create a symbolic link to `CITYSCAPES_ROOT` in the `data/` directory of the repository and name it `Cityscapes`. In Linux, supposing that `FOG_SIMULATION_ROOT` points to the directory into which you have cloned this repository, this can be performed with
+   ```
+   cd ${FOG_SIMULATION_ROOT}/data
+   ln -s ${CITYSCAPES_ROOT} Cityscapes
+   ```
+4. Open MATLAB and change its current folder to `source/Fog_simulation/Experiments/`. Run the experiment for generating **Foggy Cityscapes-refined** by issuing
+   ```
+   Cityscapes_trainval_refined_stereogf_beta_0_01_serial;
+   ```
+   in the Command Window. This should create the directory `output/Foggy_Cityscapes/` and populate it with synthetic foggy images in `leftImg8bit_trainval_refined_stereogf_beta_0.01_foggy` as well as corresponding estimated transmittance maps in `leftImg8bit_trainval_refined_stereogf_beta_0.01_transmittance` and depth maps in `depth_stereoscopic_trainval_refined`.  
+   *Foggy Cityscapes-refined* is based on a refined list of 550 Cityscapes images (498 `train` plus 52 `val`) that yield high-quality synthetic foggy images; details are given in our [publication][project_page].
+5. The experiment of step 4 uses a single thread and thus runs for around one day on an Intel Core i7 machine with 16 GB RAM and MATLAB 2017b. However, the core MATLAB function `source/Fog_simulation/Fog_simulation_Cityscapes.m`
 
 
 ### References
