@@ -96,12 +96,18 @@ We have tested the demo:
 
 The results of the demo may differ for MATLAB release 2014a or earlier compared to 2014b or newer, although this difference is generally negligible. The reason is that for the required conversion of the input image to the CIE L\*a\*b\* color space, the recommended MATLAB function `rgb2lab` was only introduced in release 2014b, and the alternative implementation for earlier releases produces slightly different values for the output CIE L\*a\*b\* image. We note that for generating our *Foggy Cityscapes* dataset, we have used `rgb2lab`.
 
+For an easier in-depth experimentation and inspection of our fog simulation pipeline, in particular of its core depth denoising and completion part, we provide an [auxiliary demo script](source/Depth_processing/Demo_depth_denoising_and_completion_Cityscapes.m) where we have "unrolled" the various components of the pipeline to expose them better as a whole. Its functionality is similar to that of the main demo and it can be run with
+```
+cd(fullfile(FOG_SIMULATION_ROOT, 'source', 'Depth_processing'));
+Demo_depth_denoising_and_completion_Cityscapes;
+```
+
 
 ### Beyond the demo: running fog simulation to generate Foggy Cityscapes
 
-The *Foggy Cityscapes* dataset is directly available for download at our dedicated [website][project_page] and at the [Cityscapes website][cityscapes]. However, for completeness we include in this repository some example code which can serve as a basis for users to reproduce the full-scale fog simulation experiments on Cityscapes for generating *Foggy Cityscapes*. Prior to running these experiments, the [basic installation](#installation-for-running-the-demo) must be performed and a list of Cityscapes packages must be downloaded.
+The *Foggy Cityscapes* dataset is directly available for download at our dedicated [website][project_page] and at the [Cityscapes website][cityscapes_downloads]. However, for completeness we include in this repository some example code which can serve as a basis for users to reproduce the full-scale fog simulation experiments on Cityscapes for generating *Foggy Cityscapes*. Prior to running these experiments, the [basic installation](#installation-for-running-the-demo) must be performed and a list of Cityscapes packages must be downloaded.
 
-1. Download from the [Cityscapes website](https://www.cityscapes-dataset.com/downloads/) the following packages:
+1. Download from the [Cityscapes website][cityscapes_downloads] the following packages:
    - `leftImg8bit_trainvaltest.zip`
    - `rightImg8bit_trainvaltest.zip`
    - `disparity_trainvaltest.zip`
@@ -136,22 +142,28 @@ The *Foggy Cityscapes* dataset is directly available for download at our dedicat
    cd(FOG_SIMULATION_ROOT);
    cd(fullfile('source', 'Fog_simulation', 'Experiments'));
    ```
-   Run the experiment for generating **Foggy Cityscapes-refined** by issuing in the Command Window
+   Run the experiment for generating ***Foggy Cityscapes-refined*** by issuing in the Command Window
    ```
    Cityscapes_trainval_refined_stereogf_beta_0_01_serial;
    ```
    This should create the directory `output/Foggy_Cityscapes/` and populate it with synthetic foggy images in `leftImg8bit_trainval_refined_stereogf_beta_0.01_foggy` as well as corresponding estimated transmittance maps in `leftImg8bit_trainval_refined_stereogf_beta_0.01_transmittance` and depth maps in `depth_stereoscopic_trainval_refined`. **Note**: the results of this experiment will occupy around **6 GB of disk space**.\
    *Foggy Cityscapes-refined* is based on a refined list of 550 Cityscapes images (498 `train` plus 52 `val`) that yield high-quality synthetic foggy images; details are given in our [publication][project_page].
 
+##### Parallel execution
+
 The above experiment in step 4 uses a single thread and thus runs for around one day on an Intel Core i7 machine with 16 GB RAM and MATLAB 2017b. However, the implementation of the core MATLAB function [`Fog_simulation_Cityscapes.m`](source/Fog_simulation/Fog_simulation_Cityscapes.m) of our fog simulation experiments allows **parallel execution** of the experiment. To this end, we provide a few example `bash` scripts in the [experiments directory](source/Fog_simulation/Experiments) which launch experiments on a [Grid Engine](https://en.wikipedia.org/wiki/Oracle_Grid_Engine) cluster for faster execution. These scripts along with the [singled-threaded MATLAB script](source/Fog_simulation/Experiments/Cityscapes_trainval_refined_stereogf_beta_0_01_serial.m) can be consulted for creating a user-specific script for parallel execution depending on the features of the user's system.
 
-Last but not least, to run fog simulation on the `train_extra` split of Cityscapes, the packages `leftImg8bit_trainextra.zip`, `rightImg8bit_trainextra.zip`, `disparity_trainextra.zip` and `camera_trainextra.zip` must be downloaded. Make sure that the extracted directories obey the aforementioned structure, for example
+##### Prerequisites for Foggy Cityscapes-coarse
+
+To run our fog simulation on the `train_extra` split of Cityscapes and generate the 19997 images of *Foggy Cityscapes-coarse*, the packages `leftImg8bit_trainextra.zip`, `rightImg8bit_trainextra.zip`, `disparity_trainextra.zip` and `camera_trainextra.zip` must first be downloaded from the [Cityscapes website][cityscapes_downloads]. Make sure that the extracted directories obey the aforementioned structure, for example
 - `CITYSCAPES_ROOT`
   - `leftImg8bit`
      - `train`
      - `val`
      - `test`
      - `train_extra`
+
+Our [example `bash` script for Grid Engine](source/Fog_simulation/Experiments/Cityscapes_train_extra_full_stereogf_beta_0.01.sh) can again serve as a basis for configuring and launching the corresponding experiment on the user's system.
 
 
 ### References
@@ -172,5 +184,6 @@ http://people.ee.ethz.ch/~csakarid/SFSU_synthetic
 
 [project_page]: <http://people.ee.ethz.ch/~csakarid/SFSU_synthetic/>
 [cityscapes]: <https://www.cityscapes-dataset.com/>
+[cityscapes_downloads]: <https://www.cityscapes-dataset.com/downloads/>
 [cityscapes_citation]: <https://www.cityscapes-dataset.com/citation/>
 [slic_citation]: <https://ivrl.epfl.ch/research/superpixels/>
