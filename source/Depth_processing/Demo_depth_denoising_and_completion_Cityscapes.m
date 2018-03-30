@@ -3,14 +3,28 @@
 close all;
 clear;
 
+% Add required paths.
+
+current_script_full_name = mfilename('fullpath');
+current_script_directory = fileparts(current_script_full_name);
+addpath(fullfile(current_script_directory, '..', 'utilities'));
+addpath_relative_to_caller(current_script_full_name,...
+    fullfile('..', 'Fog_simulation'));
+addpath_relative_to_caller(current_script_full_name,...
+    fullfile('..', 'Depth_processing'));
+addpath_relative_to_caller(current_script_full_name,...
+    fullfile('..', 'Dehazing', 'Dark_channel_prior'));
+addpath_relative_to_caller(current_script_full_name,...
+    fullfile('..', 'external', 'SLIC_mex'));
+
 % Flags for plotting figures.
 plot_basic_figures = 1;
 plot_many_figures = 0;
 
 mask_color = [1, 0, 0];
-addpath('../utilities');
 
-images_root_dir = '../../data/demos';
+images_root_dir = fullfile(current_script_directory, '..', '..', 'data',...
+    'demos');
 
 % Example images. Uncomment whichever you would like to experiment with.
 image_basename = 'hamburg_000000_046078';
@@ -62,7 +76,6 @@ m = 10;
 
 % 2) Perform segmentation. |S_L| is the image containing the segmentation result
 %    for the left image. |K| is the number of output segments.
-addpath('../external/SLIC_mex');
 [S_L, K] = slicmex(left_input, number_of_preferred_segments, m);
 
 % Optionally plot the result.
@@ -107,6 +120,11 @@ thresh_large = 50;
 alpha = 10 ^ -2;
 iter = 2000;
 p = 1 - 10 ^ -2;
+
+% Suppress the nearly singular matrix warning, which otherwise occurs during
+% RANSAC plane fitting.
+warning_state = warning;
+warning('off', 'MATLAB:nearlySingularMatrix');
 
 % Fix random seed for reproducibility.
 rng('default');
@@ -229,6 +247,9 @@ for i = 1:K
     centroids(i, :) = mean(segment_xy);
     
 end
+
+% Restore initial warning settings.
+warning(warning_state);
 
 visible_indices = find(visible);
 invisible_indices = find(~visible);
@@ -387,7 +408,6 @@ is_depth_filled_invalid = ismember(S_L, wrong_segments_ids);
 % 1) from raw Cityscapes depth. Holes are treated as infinitely deep parts.
 % 2) from denoised and filled Cityscapes depth.
 % 3) by applying guided filtering to 2).
-addpath('../Fog_simulation');
 beta = 0.01;
 
 % 1)
@@ -400,7 +420,6 @@ t_filled = transmission_homogeneous_medium(depth_filled, beta,...
 % 3) Apply guided image filtering to the transmittance map that has been
 %    computed from the filled depth map, using the original clean image as the
 %    guidance image.
-addpath('../utilities');
 window_size = 41;
 mu = 1e-3;
 t_guided = clip_to_unit_range(transmission_guided_filtering(t_filled,...
@@ -418,7 +437,6 @@ c = 0.96;
 L = repmat(c, 1, 1, 3);
 
 % 2)
-addpath('../Dehazing/Dark_channel_prior');
 neighborhood_size_dark_channel = 15;
 left_image_dark = get_dark_channel(left_image, neighborhood_size_dark_channel);
 L_dcp = estimate_atmospheric_light_dcp(left_image_dark, left_image);
