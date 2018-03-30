@@ -18,7 +18,7 @@ If you use our fog simulation code in your work, please cite:
 
 ### License
 
-Our fog simulation code is made available for non-commercial use under the license agreement which is contained in the LICENSE.txt file.
+Our fog simulation code is made available for non-commercial use under the license agreement which is contained in the [license](LICENSE.txt) file.
 
 
 ### Contents
@@ -80,7 +80,7 @@ Steps:
 
 ### Demo
 
-After completing the [basic installation](#installation-for-running-the-demo), you will be all set to run the demo.
+After completing the [basic installation](#installation-for-running-the-demo), you will be all set to run the [demo](source/Demo_fog_simulation_Cityscapes.m).
 
 To run the demo in MATLAB, type in the Command Window
 ```
