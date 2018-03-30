@@ -27,7 +27,7 @@ Our fog simulation code is made available for non-commercial use under the licen
 3. [Basic installation](#installation-for-running-the-demo)
 4. [Demo](#demo)
 5. [Beyond the demo: generating *Foggy Cityscapes*](#beyond-the-demo-running-fog-simulation-to-generate-foggy-cityscapes)
-6. Extra downloads: **CNN models** fine-tuned on *Foggy Cityscapes*
+6. [References](#references)
 
 
 ### Requirements
