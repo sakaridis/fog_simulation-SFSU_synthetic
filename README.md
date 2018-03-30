@@ -32,9 +32,9 @@ Our fog simulation code is made available for non-commercial use under the licen
 
 ### Requirements
 
-1.  **MATLAB**  
+1.  **MATLAB**\
     The code has been developed and tested in MATLAB releases 2014a, 2016b and 2017b. We therefore recommend using release 2014a or later. If such a configuration is not possible, using an earlier MATLAB release is the recommended (though not tested) alternative.
-2.  **C compiler**  
+2.  **C compiler**\
     Users will have to build a binary MEX file for SLIC superpixels themselves in MATLAB (see [instructions](#installation-for-running-the-demo) below), which requires a MATLAB-supported C compiler.
 
 
@@ -123,14 +123,15 @@ The *Foggy Cityscapes* dataset is directly available for download at our dedicat
       - `camera`
          - `train`
          - `val`
-         - `test`  
+         - `test`
+
    The lower levels of the directory structure correspond to city directories and files therein (e.g. `leftImg8bit/test/berlin/berlin_000362_000019_leftImg8bit.png`) and are omitted above for brevity.
 3. Create a symbolic link to `CITYSCAPES_ROOT` in the [`data/`](data) directory of the repository and name it `Cityscapes`. In Linux, supposing that `FOG_SIMULATION_ROOT` points to the directory into which you have cloned this repository, this can be performed with
    ```
    cd ${FOG_SIMULATION_ROOT}/data
    ln -s ${CITYSCAPES_ROOT} Cityscapes
    ```
-4. Open MATLAB. Change its current folder to the directory [`source/Fog_simulation/Experiments/`](source/Fog_simulation/Experiments) of the cloned repository with
+4. Open MATLAB. Change its current folder to the [experiments directory](source/Fog_simulation/Experiments) of the cloned repository with
    ```
    cd(FOG_SIMULATION_ROOT);
    cd(fullfile('source', 'Fog_simulation', 'Experiments'));
@@ -139,10 +140,10 @@ The *Foggy Cityscapes* dataset is directly available for download at our dedicat
    ```
    Cityscapes_trainval_refined_stereogf_beta_0_01_serial;
    ```
-   This should create the directory `output/Foggy_Cityscapes/` and populate it with synthetic foggy images in `leftImg8bit_trainval_refined_stereogf_beta_0.01_foggy` as well as corresponding estimated transmittance maps in `leftImg8bit_trainval_refined_stereogf_beta_0.01_transmittance` and depth maps in `depth_stereoscopic_trainval_refined`. **Note**: the results of this experiment will occupy around **6 GB of disk space**.  
+   This should create the directory `output/Foggy_Cityscapes/` and populate it with synthetic foggy images in `leftImg8bit_trainval_refined_stereogf_beta_0.01_foggy` as well as corresponding estimated transmittance maps in `leftImg8bit_trainval_refined_stereogf_beta_0.01_transmittance` and depth maps in `depth_stereoscopic_trainval_refined`. **Note**: the results of this experiment will occupy around **6 GB of disk space**.\
    *Foggy Cityscapes-refined* is based on a refined list of 550 Cityscapes images (498 `train` plus 52 `val`) that yield high-quality synthetic foggy images; details are given in our [publication][project_page].
 
-The experiment of step 4 uses a single thread and thus runs for around one day on an Intel Core i7 machine with 16 GB RAM and MATLAB 2017b. However, the implementation of the core MATLAB function [`source/Fog_simulation/Fog_simulation_Cityscapes.m`](source/Fog_simulation/Fog_simulation_Cityscapes.m) of our fog simulation experiments allows **parallel execution** of the experiment. To this end, we provide a few example `bash` scripts in the [experiments directory](source/Fog_simulation/Experiments) which launch experiments on a [Grid Engine](https://en.wikipedia.org/wiki/Oracle_Grid_Engine) cluster for faster execution. These scripts along with the [singled-threaded MATLAB script](source/Fog_simulation/Experiments/Cityscapes_trainval_refined_stereogf_beta_0_01_serial.m) can be consulted for creating a user-specific script for parallel execution depending on the features of the user's system.
+The above experiment in step 4 uses a single thread and thus runs for around one day on an Intel Core i7 machine with 16 GB RAM and MATLAB 2017b. However, the implementation of the core MATLAB function [`Fog_simulation_Cityscapes.m`](source/Fog_simulation/Fog_simulation_Cityscapes.m) of our fog simulation experiments allows **parallel execution** of the experiment. To this end, we provide a few example `bash` scripts in the [experiments directory](source/Fog_simulation/Experiments) which launch experiments on a [Grid Engine](https://en.wikipedia.org/wiki/Oracle_Grid_Engine) cluster for faster execution. These scripts along with the [singled-threaded MATLAB script](source/Fog_simulation/Experiments/Cityscapes_trainval_refined_stereogf_beta_0_01_serial.m) can be consulted for creating a user-specific script for parallel execution depending on the features of the user's system.
 
 Last but not least, to run fog simulation on the `train_extra` split of Cityscapes, the packages `leftImg8bit_trainextra.zip`, `rightImg8bit_trainextra.zip`, `disparity_trainextra.zip` and `camera_trainextra.zip` must be downloaded. Make sure that the extracted directories obey the aforementioned structure, for example
 - `CITYSCAPES_ROOT`
